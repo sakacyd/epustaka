@@ -3,12 +3,42 @@
         "title": "Java Programming",
         "author": "John Doe",
         "price": 100000,
-        "type": "book"
+        "type": "book",
+        "status": "Available"
     },
     {
         "title": "Tech Magazine",
         "publisher": "Tech Publisher",
         "price": 50000,
-        "type": "magazine"
+        "type": "magazine",
+        "status": "Available"
+    },
+    {
+        "title": "Introduction to Algorithms",
+        "author": "Thomas H. Cormen",
+        "price": 120000,
+        "type": "book",
+        "status": "Available"
+    },
+    {
+        "title": "Science Today",
+        "publisher": "Science Publications",
+        "price": 45000,
+        "type": "magazine",
+        "status": "Available"
+    },
+    {
+        "title": "Web Development with HTML5",
+        "author": "Jane Smith",
+        "price": 80000,
+        "type": "book",
+        "status": "Available"
+    },
+    {
+        "title": "Nature Explorer",
+        "publisher": "Nature Publisher",
+        "price": 35000,
+        "type": "magazine",
+        "status": "Available"
     }
 ]

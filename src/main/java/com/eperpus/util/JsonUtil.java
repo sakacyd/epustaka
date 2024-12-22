@@ -15,9 +15,7 @@ import java.util.List;
 public class JsonUtil {
 
     public static List<User> readUsersFromFile(String filename) throws IOException {
-        // Menggunakan classloader untuk mendapatkan file di resources
         InputStream inputStream = JsonUtil.class.getResourceAsStream("/com/eperpus/data/" + filename);
-
         if (inputStream == null) {
             throw new IOException("File not found: " + filename);
         }
@@ -27,49 +25,55 @@ public class JsonUtil {
                 objectMapper.getTypeFactory().constructCollectionType(List.class, User.class));
     }
 
-    // Membaca data pengguna dari file JSON
     public static List<Item> readItemsFromFile(String filename) throws IOException {
-        // Menggunakan classloader untuk mendapatkan file di resources
         InputStream inputStream = JsonUtil.class.getResourceAsStream("/com/eperpus/data/" + filename);
-
         if (inputStream == null) {
             throw new IOException("File not found: " + filename);
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode rootNode = objectMapper.readTree(inputStream); // Membaca file JSON sebagai tree
+        JsonNode rootNode = objectMapper.readTree(inputStream);
         List<Item> items = new ArrayList<>();
 
         for (JsonNode node : rootNode) {
-            String type = node.get("type").asText(); // Mendapatkan tipe item (book/magazine)
+            String type = node.get("type").asText(); // Mendapatkan tipe item
 
             if ("book".equalsIgnoreCase(type)) {
-                // Parsing objek Book
                 String title = node.get("title").asText();
                 String author = node.get("author").asText();
                 double price = node.get("price").asDouble();
                 String itemType = node.get("type").asText();
-                items.add(new Book(title, author, price, itemType));
+                String status = node.has("status") ? node.get("status").asText() : "available"; // Default status
+                items.add(new Book(title, author, price, itemType, status));
             } else if ("magazine".equalsIgnoreCase(type)) {
-                // Parsing objek Magazine
                 String title = node.get("title").asText();
                 String publisher = node.get("publisher").asText();
                 double price = node.get("price").asDouble();
                 String itemType = node.get("type").asText();
-                items.add(new Magazine(title, publisher, price, itemType));
+                String status = node.has("status") ? node.get("status").asText() : "available"; // Default status
+                items.add(new Magazine(title, publisher, price, itemType, status));
             }
         }
 
-        return items; // Mengembalikan list Item yang berisi Book dan Magazine
+        return items;
     }
 
-    // Menyimpan data pengguna ke file JSON
+    // Memperbarui status item menjadi 'borrowed' atau 'purchased'
+    public static void updateItemStatus(List<Item> items, Item targetItem, String status) throws IOException {
+        for (Item item : items) {
+            if (item.equals(targetItem)) {
+                item.setStatus(status); // Mengupdate status item
+                break;
+            }
+        }
+        writeItemsToFile(items, "items_data.json"); // Menyimpan kembali ke file
+    }
+
     public static void writeUsersToFile(List<User> items, String filename) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(new java.io.File(filename), items);
     }
 
-    // Menyimpan data pengguna ke file JSON
     public static void writeItemsToFile(List<Item> items, String filename) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(new java.io.File(filename), items);

@@ -1,12 +1,10 @@
 package com.eperpus.model;
 
 public class Book extends Item {
-    
-    private String author;  // Penulis buku
+    private String author;
 
-    // Constructor untuk Book
-    public Book(String title, String author, double price, String type) {
-        super(title, price, type);  // Memanggil constructor superclass Item
+    public Book(String title, String author, double price, String type, String status) {
+        super(title, price, type, status);
         this.author = author;
     }
 
@@ -19,20 +17,23 @@ public class Book extends Item {
         this.author = author;
     }
 
-    // Implementasi metode untuk membeli buku
     @Override
     public void buy() {
-        System.out.println("Buku '" + getTitle() + "' berhasil dibeli dengan harga Rp" + getPrice());
+        if (getStatus().equals("available")) {
+            setStatus("purchased"); // Mengubah status menjadi purchased
+            System.out.println("Book '" + getTitle() + "' has been purchased.");
+        } else {
+            System.out.println("Book '" + getTitle() + "' is not available for purchase.");
+        }
     }
 
-    // Implementasi metode untuk meminjam buku
     @Override
     public void borrow() {
-        System.out.println("Buku '" + getTitle() + "' berhasil dipinjam.");
-    }
-
-    @Override
-    public String toString() {
-        return "Buku [Judul=" + getTitle() + ", Penulis=" + author + ", Harga=" + getPrice() + ", Tipe=" + getType() + "]";
+        if (getStatus().equals("available")) {
+            setStatus("borrowed"); // Mengubah status menjadi borrowed
+            System.out.println("Book '" + getTitle() + "' has been borrowed.");
+        } else {
+            System.out.println("Book '" + getTitle() + "' is not available for borrowing.");
+        }
     }
 }

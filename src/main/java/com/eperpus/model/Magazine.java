@@ -1,12 +1,10 @@
 package com.eperpus.model;
 
 public class Magazine extends Item {
-    
-    private String publisher;  // Penerbit majalah
+    private String publisher;
 
-    // Constructor untuk Magazine
-    public Magazine(String title, String publisher, double price, String type) {
-        super(title, price, type);  // Memanggil constructor superclass Item
+    public Magazine(String title, String publisher, double price, String type, String status) {
+        super(title, price, type, status);
         this.publisher = publisher;
     }
 
@@ -19,20 +17,23 @@ public class Magazine extends Item {
         this.publisher = publisher;
     }
 
-    // Implementasi metode untuk membeli majalah
     @Override
     public void buy() {
-        System.out.println("Majalah '" + getTitle() + "' berhasil dibeli dengan harga Rp" + getPrice());
+        if (getStatus().equals("available")) {
+            setStatus("purchased"); // Mengubah status menjadi purchased
+            System.out.println("Magazine '" + getTitle() + "' has been purchased.");
+        } else {
+            System.out.println("Magazine '" + getTitle() + "' is not available for purchase.");
+        }
     }
 
-    // Implementasi metode untuk meminjam majalah
     @Override
     public void borrow() {
-        System.out.println("Majalah '" + getTitle() + "' berhasil dipinjam.");
-    }
-
-    @Override
-    public String toString() {
-        return "Majalah [Judul=" + getTitle() + ", Penerbit=" + publisher + ", Harga=" + getPrice() + ", Tipe=" + getType() + "]";
+        if (getStatus().equals("available")) {
+            setStatus("borrowed"); // Mengubah status menjadi borrowed
+            System.out.println("Magazine '" + getTitle() + "' has been borrowed.");
+        } else {
+            System.out.println("Magazine '" + getTitle() + "' is not available for borrowing.");
+        }
     }
 }

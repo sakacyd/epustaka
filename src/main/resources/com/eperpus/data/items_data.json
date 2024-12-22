@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Java Programming",
+        "author": "John Doe",
+        "price": 100000,
+        "type": "book"
+    },
+    {
+        "title": "Tech Magazine",
+        "publisher": "Tech Publisher",
+        "price": 50000,
+        "type": "magazine"
+    }
+]

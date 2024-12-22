@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.eperpus.controller.LoginController">
+    <children>
+        <!-- Konten untuk email, password, dan tombol login -->
+        <TextField fx:id="emailField" layoutX="100" layoutY="100" />
+        <PasswordField fx:id="passwordField" layoutX="100" layoutY="150" />
+        <Button fx:id="loginButton" text="Login" layoutX="100" layoutY="200" onAction="#handleLogin"/>
+    </children>
+</AnchorPane>

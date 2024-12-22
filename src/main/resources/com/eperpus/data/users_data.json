@@ -1,0 +1,17 @@
+[
+    {
+      "userId": "1",
+      "username": "saka",
+      "password": "12345",
+      "email": "saka@gmail.com",
+      "membership": "REGULAR"
+    },
+    {
+      "userId": "2",
+      "username": "hayu",
+      "password": "12345",
+      "email": "hayu@gmail.com.com",
+      "membership": "PREMIUM"
+    }
+  ]
+  

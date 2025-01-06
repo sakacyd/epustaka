@@ -36,22 +36,18 @@ public class JsonUtil {
         List<Item> items = new ArrayList<>();
 
         for (JsonNode node : rootNode) {
-            String type = node.get("type").asText(); // Mendapatkan tipe item
+            String type = node.get("type").asText(); // Mendapatkan tipe item (book atau magazine)
+            String title = node.get("title").asText();
+            double price = node.get("price").asDouble();
+            String subscription = node.get("subscription").asText(); // Mendapatkan subscription type
+            String status = node.get("status").asText(); // Mendapatkan status item
 
             if ("book".equalsIgnoreCase(type)) {
-                String title = node.get("title").asText();
                 String author = node.get("author").asText();
-                double price = node.get("price").asDouble();
-                String itemType = node.get("type").asText();
-                String status = node.has("status") ? node.get("status").asText() : "available"; // Default status
-                items.add(new Book(title, author, price, itemType, status));
+                items.add(new Book(title, author, price, type, subscription, status));
             } else if ("magazine".equalsIgnoreCase(type)) {
-                String title = node.get("title").asText();
                 String publisher = node.get("publisher").asText();
-                double price = node.get("price").asDouble();
-                String itemType = node.get("type").asText();
-                String status = node.has("status") ? node.get("status").asText() : "available"; // Default status
-                items.add(new Magazine(title, publisher, price, itemType, status));
+                items.add(new Magazine(title, publisher, price, type, subscription, status));
             }
         }
 

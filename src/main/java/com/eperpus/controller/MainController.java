@@ -4,6 +4,7 @@ import com.eperpus.model.User;
 import com.eperpus.model.Book;
 import com.eperpus.model.Item;
 import com.eperpus.model.Magazine;
+import com.eperpus.model.Membership;
 import com.eperpus.util.JsonUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -16,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +61,7 @@ public class MainController {
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
         updateUsernameLabel();
+        loadItems();
     }
 
     private void updateUsernameLabel() {
@@ -79,8 +82,6 @@ public class MainController {
         magazinePublisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
         magazinePriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         magazineActionColumn.setCellFactory(param -> createMagazineActionCell());
-
-        loadItems();
     }
 
     private TableCell<Book, Button> createBookActionCell() {
@@ -132,23 +133,51 @@ public class MainController {
     }
 
     private void loadItems() {
-        try {
-            List<Item> items = JsonUtil.readItemsFromFile("items_data.json");
-            @SuppressWarnings("unchecked")
-            List<Book> books = (List<Book>) (List<?>) items.stream().filter(item -> item instanceof Book)
-                    .collect(Collectors.toList());
-            @SuppressWarnings("unchecked")
-            List<Magazine> magazines = (List<Magazine>) (List<?>) items.stream()
-                    .filter(item -> item instanceof Magazine).collect(Collectors.toList());
+        if (currentUser != null) {
+            // Load items berdasarkan membership user
+            try {
+                List<Item> items = JsonUtil.readItemsFromFile("items_data.json");
 
-            bookTable.getItems().setAll(books);
-            magazineTable.getItems().setAll(magazines);
-        } catch (Exception e) {
-            e.printStackTrace();
+                // Filter items based on user membership
+                List<Item> filteredItems = new ArrayList<>();
+                for (Item item : items) {
+                    if (currentUser.getMembership() == Membership.PREMIUM) {
+                        // Premium users can access all items
+                        filteredItems.add(item);
+                    } else if (currentUser.getMembership() == Membership.REGULAR
+                            && item.getSubscription().equalsIgnoreCase("Regular")) {
+                        // Regular users can only access Regular items
+                        filteredItems.add(item);
+                    }
+                }
+
+                // Separate books and magazines
+                @SuppressWarnings("unchecked")
+                List<Book> books = (List<Book>) (List<?>) filteredItems.stream()
+                        .filter(item -> item instanceof Book)
+                        .collect(Collectors.toList());
+
+                @SuppressWarnings("unchecked")
+                List<Magazine> magazines = (List<Magazine>) (List<?>) filteredItems.stream()
+                        .filter(item -> item instanceof Magazine)
+                        .collect(Collectors.toList());
+
+                // Set items to tables
+                bookTable.getItems().setAll(books);
+                magazineTable.getItems().setAll(magazines);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Failed to load items.");
+                alert.showAndWait();
+            }
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Failed to load items.");
+            alert.setContentText("User  not logged in.");
             alert.showAndWait();
         }
     }

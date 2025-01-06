@@ -3,8 +3,8 @@ package com.eperpus.model;
 public class Magazine extends Item {
     private String publisher;
 
-    public Magazine(String title, String publisher, double price, String type, String status) {
-        super(title, price, type, status);
+    public Magazine(String title, String publisher, double price, String type, String subscription, String status) {
+        super(title, price, type, subscription, status);
         this.publisher = publisher;
     }
 

@@ -2,7 +2,7 @@ package com.eperpus.model;
 
 public enum Membership {
     
-    REGULAR("Reguler"),  // Tipe membership Reguler
+    REGULAR("Regular"),  // Tipe membership Reguler
     PREMIUM("Premium");  // Tipe membership Premium
 
     private final String type;

@@ -4,41 +4,47 @@
         "author": "John Doe",
         "price": 100000,
         "type": "book",
-        "status": "Available"
+        "status": "Available",
+        "subscription": "Premium"
     },
     {
         "title": "Tech Magazine",
         "publisher": "Tech Publisher",
         "price": 50000,
         "type": "magazine",
-        "status": "Available"
+        "status": "Available",
+        "subscription": "Regular"
     },
     {
         "title": "Introduction to Algorithms",
         "author": "Thomas H. Cormen",
         "price": 120000,
         "type": "book",
-        "status": "Available"
+        "status": "Available",
+        "subscription": "Regular"
     },
     {
         "title": "Science Today",
         "publisher": "Science Publications",
         "price": 45000,
         "type": "magazine",
-        "status": "Available"
+        "status": "Available",
+        "subscription": "Premium"
     },
     {
         "title": "Web Development with HTML5",
         "author": "Jane Smith",
         "price": 80000,
         "type": "book",
-        "status": "Available"
+        "status": "Available",
+        "subscription": "Premium"
     },
     {
         "title": "Nature Explorer",
         "publisher": "Nature Publisher",
         "price": 35000,
         "type": "magazine",
-        "status": "Available"
+        "status": "Available",
+        "subscription": "Premium"
     }
 ]

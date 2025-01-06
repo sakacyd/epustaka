@@ -1,5 +1,6 @@
 package com.eperpus.controller;
 
+import com.eperpus.model.Transaction;
 import com.eperpus.model.User;
 import com.eperpus.model.Book;
 import com.eperpus.model.Item;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -182,25 +184,66 @@ public class MainController {
         }
     }
 
-    public static void handlePinjam(Item item) {
+    private void handlePinjam(Item item) {
         try {
+            // Update status item
             List<Item> items = JsonUtil.readItemsFromFile("items_data.json");
             JsonUtil.updateItemStatus(items, item, "borrowed");
+
+            // Buat transaksi baru
+            Transaction transaction = new Transaction(
+                    currentUser.getUsername(),
+                    currentUser.getEmail(),
+                    item.getTitle(),
+                    item.getSubscription(),
+                    item.getType(),
+                    LocalDateTime.now());
+
+            // Baca atau buat file transaksi.json
+            List<Transaction> transactions = JsonUtil.readTransactionsFromFile("transaksi.json");
+            transactions.add(transaction);
+
+            // Tulis kembali ke file
+            JsonUtil.writeTransactionsToFile(transactions, "transaksi.json");
+
+            // Tampilkan pesan sukses
+            showAlert("Success", "Item '" + item.getTitle() + "' has been borrowed.");
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Error", "Failed to process transaction.");
         }
     }
 
-    public static void handleBeli(Item item) {
+    private void handleBeli(Item item) {
         try {
+            // Update status item
             List<Item> items = JsonUtil.readItemsFromFile("items_data.json");
             JsonUtil.updateItemStatus(items, item, "purchased");
+
+            // Buat transaksi baru
+            Transaction transaction = new Transaction(
+                    currentUser.getUsername(),
+                    currentUser.getEmail(),
+                    item.getTitle(),
+                    item.getSubscription(),
+                    item.getType(),
+                    LocalDateTime.now());
+
+            // Baca atau buat file transaksi.json
+            List<Transaction> transactions = JsonUtil.readTransactionsFromFile("transaksi.json");
+            transactions.add(transaction);
+
+            // Tulis kembali ke file
+            JsonUtil.writeTransactionsToFile(transactions, "transaksi.json");
+
+            // Tampilkan pesan sukses
+            showAlert("Success", "Item '" + item.getTitle() + "' has been purchased.");
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Error", "Failed to process transaction.");
         }
     }
 
-    @SuppressWarnings("unused")
     private static void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

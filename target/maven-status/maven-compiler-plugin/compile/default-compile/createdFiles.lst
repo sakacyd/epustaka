@@ -1,3 +1,4 @@
+com/eperpus/model/Transaction.class
 com/eperpus/controller/MainController.class
 com/eperpus/model/Item.class
 com/eperpus/controller/MainController$1.class
@@ -10,3 +11,4 @@ module-info.class
 com/eperpus/model/Magazine.class
 com/eperpus/model/Book.class
 com/eperpus/model/User.class
+com/eperpus/util/JsonUtil$1.class

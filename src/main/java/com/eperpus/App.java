@@ -9,7 +9,7 @@ import java.io.IOException;
 public class App extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(@SuppressWarnings("exports") Stage primaryStage) throws IOException {
         // Load the login view (FXML)
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/eperpus/view/login.fxml"));
         Scene scene = new Scene(loader.load());

@@ -3,8 +3,8 @@ package com.eperpus.model;
 public class Book extends Item {
     private String author;
 
-    public Book(String title, String author, double price, String type, String status) {
-        super(title, price, type, status);
+    public Book(String title, String author, double price, String type, String subscription, String status) {
+        super(title, price, type, subscription, status);
         this.author = author;
     }
 

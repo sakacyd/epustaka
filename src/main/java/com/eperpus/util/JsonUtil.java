@@ -6,6 +6,7 @@ import com.eperpus.model.Item;
 import com.eperpus.model.Magazine;
 import com.eperpus.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -97,6 +98,7 @@ public class JsonUtil {
     }
 
     public static void writeTransactionsToFile(List<Transaction> transactions, String filePath) throws IOException {
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.writeValue(new File(filePath), transactions);
     }
 }
